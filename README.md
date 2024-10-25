@@ -1,21 +1,21 @@
 **The English introduction is placed below the Chinese version.**
 
-一个支持并行反编译的Python反编译工具，多进程并行反编译pyc文件中的每个类和函数。
-同时支持`uncompyle6`和`decompyle3`库。
-由于`uncompyle6`和`decompyle3`库是不支持并行的，反编译超过20KB的pyc文件会很慢，
-而且一旦单个函数反编译失败，整个反编译就会停止。
-而这个程序的目的旨在于增强反编译过程的速度和健壮性。
+一个支持并行反编译的Python反编译工具，多进程并行反编译pyc文件中的每个类和函数。  
+同时支持`uncompyle6`和`decompyle3`库。  
+由于`uncompyle6`和`decompyle3`库是不支持并行的，反编译超过20KB的pyc文件会很慢，  
+而且一旦单个函数反编译失败，整个反编译就会停止。  
+而这个程序的目的旨在于增强反编译过程的速度和健壮性。  
 ## 1.命令行
 ```shell
 python decompiler.py <要编译的.pyc文件名> <--uncompyle6或--decompyle3开关(可选)>
 ```
-如果不指定开关，则默认使用`uncompyle6`库。
-运行结束后，会自动在pyc文件所在的目录生成一个同名的.py文件，作为反编译结果，如`python decompiler.py test.pyc`会生成`test.py`这个文件。
+如果不指定开关，则默认使用`uncompyle6`库。  
+运行结束后，会自动在pyc文件所在的目录生成一个同名的.py文件，作为反编译结果，如`python decompiler.py test.pyc`会生成`test.py`这个文件。  
 
 ## 2.程序的实现原理
-pyc文件本身是一个`Code`(字节码)对象，而这个对象的co_const属性的元组内部又包含了函数和类的`Code`对象。
-程序首先预处理pyc文件，将各个函数和类的字节码分离出来，并将函数和类以简单的`return`语句替代。
-然后将预处理之后的pyc文件反编译成.py源文件，此时的源文件只有大致框架，就像下面这样：
+pyc文件本身是一个`Code`(字节码)对象，而这个对象的co_const属性的元组内部又包含了函数和类的`Code`对象。  
+程序首先预处理pyc文件，将各个函数和类的字节码分离出来，并将函数和类以简单的`return`语句替代。  
+然后将预处理之后的pyc文件反编译成.py源文件，此时的源文件只有大致框架，就像下面这样：  
 ```python
 import sys,os
 
@@ -27,18 +27,18 @@ def test():
 
 if __name__=="__main__":test()
 ```
-接着再使用多进程，并行反编译各个函数和类的字节码文件，最后将结果合并，生成最终的代码。
-此外，如果一个函数、类反编译失败，不会影响其他函数、类的反编译。
+接着再使用多进程，并行反编译各个函数和类的字节码文件，最后将结果合并，生成最终的代码。  
+此外，如果一个函数、类反编译失败，不会影响其他函数、类的反编译。  
 
 ## 3.依赖的库
-这个反编译工具依赖于`pyobject`库，尤其是`pyobject.code_`这个子模块中的`Code`类。
-`pyobject`库可用`pip install pyobject`命令安装。
+这个反编译工具依赖于`pyobject`库，尤其是`pyobject.code_`这个子模块中的`Code`类。  
+`pyobject`库可用`pip install pyobject`命令安装。  
 
 ## 4.兼容性
-程序支持所有的Python 3版本，由于不依赖于特定版本的字节码。
+程序支持所有的Python 3版本，由于不依赖于特定版本的字节码。  
 
 ## 5.TODO
-由于单个类的方法可能会很多，自己未来会考虑使用递归，将类中的各个方法拆分再并行反编译，以进一步提升速度。
+由于单个类的方法可能会很多，自己未来会考虑使用递归，将类中的各个方法拆分再并行反编译，以进一步提升速度。  
 
 
 A Python decompiler tool supporting parallel decompilation, designed to decompile each class and function within pyc files using multiple processes. It supports both `uncompyle6` and `decompyle3` libraries. The `uncompyle6` and `decompyle3` libraries themselves do not support parallel processing, which can result in slow decompilation for pyc files larger than 20KB and can halt the entire decompilation process if a single function fails to decompile. This program aims to enhance the speed and robustness of the decompilation process.
