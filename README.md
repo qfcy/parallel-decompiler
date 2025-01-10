@@ -1,10 +1,10 @@
 **The English introduction is placed below the Chinese version.**
 
 一个支持并行反编译的Python反编译工具，多进程并行反编译pyc文件中的每个类和函数。  
-同时支持`uncompyle6`和`decompyle3`库。  
+同时支持使用`uncompyle6`和`decompyle3`库。  
 由于`uncompyle6`和`decompyle3`库是不支持并行的，反编译超过20KB的pyc文件会很慢，  
 而且一旦单个函数反编译失败，整个反编译就会停止。  
-而这个程序的目的旨在于增强反编译过程的速度和健壮性。  
+而这个程序采用了并行，旨在于提高反编译的速度和性能。  
 ## 1.命令行
 ```shell
 python decompiler.py <要编译的.pyc文件名> <--uncompyle6或--decompyle3开关(可选)>
@@ -41,7 +41,7 @@ if __name__=="__main__":test()
 由于单个类的方法可能会很多，自己未来会考虑使用递归，将类中的各个方法拆分再并行反编译，以进一步提升速度。  
 
 
-A Python decompiler tool supporting parallel decompilation, designed to decompile each class and function within pyc files using multiple processes. It supports both `uncompyle6` and `decompyle3` libraries. The `uncompyle6` and `decompyle3` libraries themselves do not support parallel processing, which can result in slow decompilation for pyc files larger than 20KB and can halt the entire decompilation process if a single function fails to decompile. This program aims to enhance the speed and robustness of the decompilation process.
+A Python decompiler tool supporting parallel decompilation, designed to decompile each class and function within pyc files using multiple processes. It supports using both `uncompyle6` and `decompyle3` libraries. The `uncompyle6` and `decompyle3` libraries themselves do not support parallel processing, which can result in slow decompilation for pyc files larger than 20KB and can halt the entire decompilation process if a single function fails to decompile. This program utilizes parallel decompilation to enhance the speed and performance of the decompilation process.
 
 ## 1. Command Line Usage
 ```shell
